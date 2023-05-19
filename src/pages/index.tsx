@@ -1,11 +1,24 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
+import Head from "next/head";
+import { useState } from "react";
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.css";
+import Sidebar from "@/components/SideBar";
+import Chart from "@/components/Chart";
+import { FaRegUserCircle } from "react-icons/fa";
+import { RiArrowDropDownLine } from "react-icons/ri";
+import OverviewChart from "@/components/OverviewChart";
+import Nav from "@/components/Nav";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const [collapsed, setCollapsed] = useState(false);
+
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
+
   return (
     <>
       <Head>
@@ -15,100 +28,74 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>src/pages/index.tsx</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
+        <Sidebar collapsed={collapsed} toggleCollapsed={toggleCollapsed} />
+
+        <div className={styles.board}>
+         <Nav />
+
+          <div className={styles.boardContent}>
+            <div className={styles.view}>
+              <h2>Sales overview</h2>
+              <div className={styles.salesOverview}>
+                <div className={styles.overviewContent}>
+                  <h5>Today&apos;s sales</h5>
+                  <p>₦1,652.50</p>
+                </div>
+
+                <div className={styles.overviewContentActive}>
+                  <h5>24 Aug - 01 Sep 21</h5>
+                  <OverviewChart />
+                  <h4>This Week</h4>
+                  <p>₦1,652.50</p>
+                </div>
+                <div className={styles.overviewContent}>
+                  <h4>24 Aug - 01 Sep 21</h4>
+                  <OverviewChart />
+                  <h4>This Month</h4>
+                  <p>₦1,652.50</p>
+                </div>
+                <div className={styles.overviewContent}>
+                  <h5>24 Aug - 01 Sep 21</h5>
+                  <OverviewChart />
+                  <h4>This Month</h4>
+                  <p>₦1,652.50</p>
+                </div>
+              </div>
+            </div>
+            <div className={styles.boardBottom}>
+              <div className={styles.graph}>
+                <div className={styles.graphTop}>
+                  <h4>Sales</h4>
+                  <span>7 days</span>
+                  <span>30 days</span>
+                  <select name="" id="">
+                    <option value="">USD</option>
+                    <option value="">NGN</option>
+                  </select>
+                  <div className={styles.email}>
+                    <input type="email" placeholder="Email" />
+                    <RiArrowDropDownLine className={styles.profileIcon} />
+                  </div>
+                  <button>
+                    <RiArrowDropDownLine className={styles.profileIcon} />
+                    Download Report
+                  </button>
+                </div>
+                <div className={styles.line}>
+                  <Chart />
+                </div>
+              </div>
+
+              <div className={styles.wire}>
+                <p>
+                  KlashaWire - send money to businesses globally from Africa
+                </p>
+                <button>Send a wire</button>
+              </div>
+            </div>
           </div>
-        </div>
-
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-        </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
         </div>
       </main>
     </>
-  )
+  );
 }
